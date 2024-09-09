@@ -136,5 +136,5 @@ func Login(c *gin.Context) {
 	c.SetCookie("token", resp.Token, 3600, "/", "", false, true)
 
 	// 重定向到仪表板
-	c.Redirect(http.StatusFound, "/dashboard")
+	c.Redirect(http.StatusFound, "/api/page/dashboard")
 }

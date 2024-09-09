@@ -33,10 +33,7 @@ func SetUserID(ctx context.Context, userID uint) context.Context {
 }
 
 // GetUserID 从 context 中获取用户ID
-func GetUserID(ctx context.Context) uint {
+func GetUserID(ctx context.Context) (uint, bool) {
 	userID, ok := ctx.Value(UserIDKey).(uint)
-	if !ok {
-		return 0
-	}
-	return userID
+	return userID, ok
 }

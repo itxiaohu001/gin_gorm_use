@@ -24,13 +24,6 @@ func SetupRouter() *gin.Engine {
 
 	// 添加登录页面路由
 	r.GET("/login", showLoginPage)
-	// 处理登录请求
-	r.POST("/login", handlers.Login)
-
-	// 添加仪表板页面路由
-	r.GET("/dashboard", func(c *gin.Context) {
-		c.HTML(200, "dashboard.html", gin.H{})
-	})
 
 	admin := r.Group("/admin")
 	admin.Use(middleware.AuthMiddleware())
@@ -44,6 +37,13 @@ func SetupRouter() *gin.Engine {
 	protected := r.Group("/api")
 	protected.Use(middleware.AuthMiddleware())
 	{
+		// 页面相关
+		pages := protected.Group("/page")
+		pages.POST("/login", handlers.Login)
+		pages.GET("/dashboard", func(c *gin.Context) {
+			c.HTML(200, "dashboard.html", gin.H{})
+		})
+
 		// 文件相关路由
 		files := protected.Group("/files")
 		{
